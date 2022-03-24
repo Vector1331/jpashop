@@ -14,8 +14,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 @SpringBootTest
 class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
-    @Test
+    //@Autowired MemberRepository memberRepository;
+    /*@Test
     @Transactional
     @Rollback(false)
     public void testMember() throws Exception {
@@ -31,7 +31,7 @@ class MemberRepositoryTest {
         assertThat(findMember.getId(),is(equalTo(member.getId())));
         assertThat(findMember.getUsername(),is(equalTo(member.getUsername())));
         // findMember == member 는 true이다. 같은 영속성 content안에선 같은 entity로 인식
-    }
+    }*/
 
 
 
