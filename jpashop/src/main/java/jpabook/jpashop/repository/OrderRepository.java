@@ -100,4 +100,14 @@ public class OrderRepository {
                 .getResultList();
     }
     // 단점 : 1대 다를 fetch 조인 하는순간 페이징이 불가능하다. firstResult MaxResults
+
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                        "select o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
 }
