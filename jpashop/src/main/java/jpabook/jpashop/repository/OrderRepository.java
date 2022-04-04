@@ -76,28 +76,14 @@ public class OrderRepository {
                                 " join fetch o.delivery d", Order.class)
                 .getResultList();
     }
-    /*public List<Order> findAllByCriteria(OrderSearch orderSearch) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Order> cq = cb.createQuery(Order.class);
-        Root<Order> o = cq.from(Order.class);
-        Join<Order, Member> m = o.join("member", JoinType.INNER); //회원과 조인
-        List<Predicate> criteria = new ArrayList<>();
-//주문 상태 검색
-        if (orderSearch.getOrderStatus() != null) {
-            Predicate status = cb.equal(o.get("status"),
-                    orderSearch.getOrderStatus());
-            criteria.add(status);
-        }
-//회원 이름 검색
-        if (StringUtils.hasText(orderSearch.getMemberName())) {
-            Predicate name =
-                    cb.like(m.<String>get("name"), "%" +
-                            orderSearch.getMemberName() + "%");
-            criteria.add(name);
-        }
-        cq.where(cb.and(criteria.toArray(new Predicate[criteria.size()])));
-        TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000); //최대
-        1000건
-        return query.getResultList();
-    }*/
+
+    public List<OrderSimpleQueryDto> findOrderDtos() {
+        return em.createQuery(
+                "select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address)" +
+                        " from Order o"+
+                " join o.member m" +
+                " join o.delivery d", OrderSimpleQueryDto.class)
+                .getResultList();
+
+    }
 }
