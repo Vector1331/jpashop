@@ -86,4 +86,18 @@ public class OrderRepository {
                 .getResultList();
 
     }
+
+    //v3, distinct(jpa는 id가 같으면 같은걸로 봄, 같은 걸 db에서는 중복이라고 안봄)
+    // distinct는 db에 distinct 키워드 날려주고
+    // 엔티티 (루트가) 중복인 경우 중복 걸러서 컬렉션에 담아준다.
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                        "select distinct o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d" +
+                                " join fetch o.orderItems oi" +
+                                " join fetch oi.item i", Order.class)
+                .getResultList();
+    }
+    // 단점 : 1대 다를 fetch 조인 하는순간 페이징이 불가능하다. firstResult MaxResults
 }
